@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">JPaper</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="pick_pic">PICK</string>
+    <string name="send_pic">SEND</string>
+    <string name="get_pic">GET</string>
+    <string name="action_upload">Upload</string>
+    <string name="title_activity_upload">UploadActivity</string>
+    <string name="pic_name">Picture Name</string>
+    <string name="pic_type">Picture_type</string>
+    <string name="query_type">query_type</string>
+    <string name="Refresh">Refresh</string>
+    <string name="title_activity_detail">DetailActivity</string>
+    <string name="save">Save</string>
+    <string name="title_activity_web_view">WebViewActivity</string>
+    <string name="descPic">Image</string>
+</resources>
