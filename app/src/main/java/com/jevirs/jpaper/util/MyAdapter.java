@@ -5,12 +5,12 @@ import android.content.Context;
 import com.jevirs.jpaper.R;
 import com.jevirs.jpaper.ui.MyView;
 
-import java.util.List;
+import java.util.ArrayList;
 
 
 public class MyAdapter extends CommonAdapter<MyView>{
 
-    public MyAdapter(Context context, int resId, List<MyView> list) {
+    public MyAdapter(Context context, int resId, ArrayList<MyView> list) {
         super(context, resId, list);
     }
 

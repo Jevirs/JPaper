@@ -38,7 +38,6 @@ public class UploadActivity extends ActionBarActivity {
         private static RadioGroup radioGroup_;
         private static String filePath;
         private static final String TYPE_IMAGE="image/*";
-        private static final String AVOBJECT="JPaperPic";
         private static final int REQUEST_CODE = 90 ;
         private static final int BUILDINGS=0;
         private static final int FOOD=1;
@@ -64,6 +63,8 @@ public class UploadActivity extends ActionBarActivity {
             final EditText editText= (EditText) findViewById(R.id.pic_name);
             radioGroup= (RadioGroup) findViewById(R.id.radioGroup);
             radioGroup_= (RadioGroup) findViewById(R.id.radioGroup_);
+
+
             btn_pic_add.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -76,11 +77,11 @@ public class UploadActivity extends ActionBarActivity {
             btn_pic_send.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    AVObject avObject=new AVObject(AVOBJECT);
+                    AVObject avObject=new AVObject("JPic");
                     try {
                         AVFile avFile=AVFile.withAbsoluteLocalPath(editText.getText().toString(),filePath);
                         avObject.put("FILE",avFile);
-                        avObject.add("TYPE",String.valueOf(getPicType()));
+                        avObject.put("TYPE",getPicType());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -88,9 +89,9 @@ public class UploadActivity extends ActionBarActivity {
                         @Override
                         public void done(AVException e) {
                             if (e == null) {
-                                Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Save Succeeded", Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Save Failed:"+e.toString(), Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -106,18 +107,20 @@ public class UploadActivity extends ActionBarActivity {
                     radioGroup.clearFocus();
                 }
             });
+
             btn_pic_get.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    AVQuery<AVObject> avQuery=new AVQuery<>(AVOBJECT);
-                    avQuery.whereEqualTo("TYPE",String.valueOf(getSelType()));
+                    AVQuery<AVObject> avQuery=new AVQuery<>("JPic");
+                    avQuery.whereEqualTo("TYPE",getSelType());
+
                     avQuery.findInBackground(new FindCallback<AVObject>() {
                         @Override
                         public void done(List<AVObject> avObjects, AVException e) {
-                            if (e==null){
-                                Toast.makeText(getApplicationContext(),"找到"+avObjects.size()+"条记录",Toast.LENGTH_LONG).show();
-                            }else {
-                                Toast.makeText(getApplicationContext(),e.toString(),Toast.LENGTH_SHORT).show();
+                            if (e == null) {
+                                Toast.makeText(getApplicationContext(), "找到" + avObjects.size() + "条记录", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Find Faided" + e.toString(), Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -198,10 +201,16 @@ public class UploadActivity extends ActionBarActivity {
                     filePath = cursor.getString(column_index);
                     cursor.close();
                 }
-            }else {
-                Toast.makeText(getApplicationContext(),"并没有图片",Toast.LENGTH_SHORT).show();
+                else {
+                    Toast.makeText(getApplicationContext(),"并没有图片",Toast.LENGTH_SHORT).show();
+                }
             }
         }
+
+
+
+
+
 
 
     @Override
